@@ -16,16 +16,9 @@ use App\Jobs\SendEmailJob;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth/login');
 });
 
-Route::get('/send-to-email', function(){
-    try {
-        $details['email'] = 'ajpanghulan.pnhs@gmail.com';
-        dispatch(new App\Jobs\SendEmailJob($details));
-        dd('done');
-    } catch(Throwable $e) {
-        dd($e);
-    }
-    
-});
+Auth::routes();
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::post('/send-to-email', [App\Http\Controllers\DashboardController::class, 'post'])->name('send-to-email');
